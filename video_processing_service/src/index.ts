@@ -67,20 +67,6 @@ app.post("/process-video", async (req, res) => {
   }
 
   //Upload the processed video to cloud storage
-  try {
-    await uploadProcessedVideo(outputFileName);
-  } catch (err) {
-    Promise.all([
-      deleteRawVideo(inputFileName),
-      deleteProcessedVideo(outputFileName),
-    ]);
-    console.error(err);
-    return res
-      .status(500)
-      .send(
-        "Internal Server Error: Uploading processed video to google storage failed."
-      );
-  }
   await uploadProcessedVideo(outputFileName);
 
   //Clean up
